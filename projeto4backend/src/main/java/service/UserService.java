@@ -45,7 +45,7 @@ public class UserService {
     public Response addUser(User a) {
        boolean valid = userBean.isUserValid(a);
         if (!valid) {
-            return Response.status(400).entity("All elements are required are required").build();
+            return Response.status(400).entity("All elements are required").build();
         }
         boolean user = userBean.userNameExists(a.getUsername());
         if (user) {
