@@ -22,6 +22,8 @@ import java.io.StringReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+
 import jakarta.ws.rs.*;
 @Path("/task")
 public class TaskService {
@@ -322,6 +324,21 @@ public class TaskService {
         } else {
             TaskCreator creator = taskBean.findUserById(id);
             return Response.status(200).entity(creator).build();
+        }
+    }
+
+    @GET
+    @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAlltasksByStatus(@HeaderParam("token") String token, @HeaderParam("status") int status) {
+        System.out.println("Entrei");
+        boolean authorized = userBean.isUserAuthorized(token);
+        if (!authorized) {
+            return Response.status(401).entity("Unauthorized").build();
+        } else {
+
+            List<Task> taskList = taskBean.tasksByStatus(status);
+            return Response.status(200).entity(taskList).build();
         }
     }
 }

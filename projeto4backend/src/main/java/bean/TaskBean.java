@@ -41,6 +41,12 @@ public class TaskBean {
         }
     }
 
+    public List<Task> tasksByStatus (int status){
+        List<TaskEntity> taskEntities = taskDao.findTaskByStatus(status);
+        List<Task> taskdto = convertToDtoList(taskEntities);
+        return taskdto;
+    }
+
     public TaskEntity convertToEntity(dto.Task task) {
         TaskEntity taskEntity = new TaskEntity();
         taskEntity.setId(task.getId());
