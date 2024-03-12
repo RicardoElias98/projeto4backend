@@ -147,7 +147,12 @@ public class UserService {
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@HeaderParam("username") String username, @HeaderParam("password") String password) {
+
+        if (username == null || password == null) {
+            return Response.status(400).entity("Username and password headers are required").build();
+        }
         User user = userBean.getUserByUsername(username);
+
         if(!user.isActive()){
             return Response.status(403).entity("User is not active").build();
         } else {
