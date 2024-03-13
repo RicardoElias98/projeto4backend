@@ -235,7 +235,9 @@ public class TaskService {
             }
         }
     }
-    @PATCH
+
+
+    @PUT
     @Path("/changeStatus/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeStatus(@HeaderParam("token") String token, @PathParam("id") String id,  String status) {
@@ -331,13 +333,14 @@ public class TaskService {
     @Path("/status")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAlltasksByStatus(@HeaderParam("token") String token, @HeaderParam("status") int status) {
-        System.out.println("Entrei");
+
         boolean authorized = userBean.isUserAuthorized(token);
         if (!authorized) {
             return Response.status(401).entity("Unauthorized").build();
         } else {
 
             List<Task> taskList = taskBean.tasksByStatus(status);
+            taskList.sort(Comparator.comparing(Task::getPriority, Comparator.reverseOrder()).thenComparing(Comparator.comparing(Task::getStartDate).thenComparing(Task::getEndDate)));
             return Response.status(200).entity(taskList).build();
         }
     }
