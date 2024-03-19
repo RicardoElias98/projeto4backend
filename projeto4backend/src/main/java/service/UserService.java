@@ -180,7 +180,7 @@ public class UserService {
     }
     @DELETE
     @Path("/delete/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteUser(@HeaderParam("token") String token,@PathParam("username") String username){
         boolean authorized = userBean.isUserOwner(token);
         if (!authorized) {
