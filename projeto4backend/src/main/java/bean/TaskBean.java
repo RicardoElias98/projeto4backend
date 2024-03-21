@@ -289,6 +289,13 @@ public void createDefaultCategories(){
             taskDao.createCategory(categoryEntity);
         }
 }
+
+    public List <Task> getTasksByCategoryAndUser (UserEntity user, String category) {
+        List <TaskEntity> arrayTasks = taskDao.findTaskByUserAndCategory(user,category);
+        List <Task> dto = convertToDtoList(arrayTasks);
+        System.out.println(dto);
+        return dto;
+    }
     public void createDefaultTasks() {
     if (taskDao.findTaskById("Task1") == null) {
         TaskEntity taskEntity = new TaskEntity();

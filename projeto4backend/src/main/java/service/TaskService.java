@@ -86,6 +86,23 @@ public class TaskService {
             return Response.status(200).entity(taskList).build();
         }
     }
+
+    @GET
+    @Path("/byCategoryAndUser/{category}/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTasksByCategoryAndUser (@HeaderParam("token") String token, @PathParam("category") String category, @PathParam("username") String username) {
+        boolean authorized = userBean.isUserAuthorized(token);
+        if (!authorized) {
+            return Response.status(401).entity("Unauthorized").build();
+        } else {
+            User user = userBean.getUserByUsername(username);
+            List<Task> taskList = taskBean.getTasksByCategoryAndUser(userBean.convertToEntity(user), category);
+            taskList.sort(Comparator.comparing(Task::getPriority, Comparator.reverseOrder()).thenComparing(Comparator.comparing(Task::getStartDate).thenComparing(Task::getEndDate)));
+            return Response.status(200).entity(taskList).build();
+        }
+    }
+
+
     @DELETE
     @Path("/deleteAll/{username}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -344,4 +361,6 @@ public class TaskService {
             return Response.status(200).entity(taskList).build();
         }
     }
+
+
 }
