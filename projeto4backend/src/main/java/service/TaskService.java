@@ -295,6 +295,7 @@ public class TaskService {
         boolean authorized = userBean.isUserAuthorized(token);
         User user = userBean.getUser(token);
         String role = user.getRole();
+        System.out.println("role a entrar " + role);
         if (!authorized) {
             return Response.status(401).entity("Unauthorized").build();
         } else {

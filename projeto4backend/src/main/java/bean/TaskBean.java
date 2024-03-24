@@ -204,10 +204,12 @@ public class TaskBean {
             if(a.isActive() && !role.equals("developer")) {
                 a.setActive(false);
                 taskDao.updateTask(a);
+                return true;
             }else if(!a.isActive()&& role.equals("Owner")) {
                 taskDao.remove(a);
+                return true;
             }
-            return true;
+            return false;
         }
         return false;
     }
