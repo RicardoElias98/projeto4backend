@@ -238,7 +238,7 @@ public class TaskService {
                 return Response.status(406).entity("All elements are required").build();
             }else if (!categoryExists){
                 return Response.status(404).entity("Category does not exist").build();
-            }else if(!user.getUsername().equals(taskEntity.getUser().getUsername()) && user.getRole().equals("Developer")){
+            }else if(!user.getUsername().equals(taskEntity.getUser().getUsername()) && user.getRole().equals("developer")){
                 return Response.status(403).entity("Forbidden").build();
             }
             String category = task.getCategory();

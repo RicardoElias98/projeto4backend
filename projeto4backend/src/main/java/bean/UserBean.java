@@ -38,7 +38,9 @@ public class UserBean {
     EncryptHelper EncryptHelper;
 
     public void addUser(User a) {
+
         a.setPassword(EncryptHelper.encryptPassword(a.getPassword()));
+
         UserEntity userEntity = convertToEntity(a);
         userDao.persist(userEntity);
     }
@@ -136,6 +138,8 @@ public boolean findOtherUserByUsername(String username) {
     public String login(String username, String password) {
         UserEntity user = userDao.findUserByUsername(username);
         String password1 = EncryptHelper.encryptPassword(password);
+        System.out.println("Pass1 --- " + user.getPassword());
+        System.out.println("Pass2 --- " + password1);
         if (user != null && user.isActive()) {
             String token;
             if (user.getPassword().equals(password1)) {

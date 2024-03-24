@@ -124,7 +124,7 @@ public class UserService {
         }
             return Response.status(403).entity("Forbidden").build();
     }
-    @PATCH
+    @PUT
     @Path("/updatePassword")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePassword(@HeaderParam("token") String token, PasswordDto password) {
